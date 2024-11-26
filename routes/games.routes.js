@@ -8,7 +8,7 @@ router.post('/', GamesController.createGame);
 router.delete('/:id', GamesController.deleteGame);
 
 
-// router.put('/:email', GamesController.updateUser); // Sin terminar
+// router.put('/:email', GamesController.updateUser); // Sin terminar //
 
 
 
