@@ -5,13 +5,13 @@ const pool = require('../config/db_pgsql')
 // GET
 const getUserByEmail = async (email) => {
     console.log();
-    
+
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
         const data = await client.query(queries.getUSerByEmail, [email])
         result = data.rows
-        
+
     } catch (err) {
         console.log(err);
         throw err;
@@ -41,22 +41,22 @@ const getAllUsers = async () => {
 
 
 // CREATE
-async function createUser({ nombre, apellidos, email, password }) {
-  try {
-    
-    if (!nombre || !apellidos || !email || !password) {
-      console.error("Error: uno o más parámetros están undefined o null.");
-      return null;
+async function createUser({ nombre, apellidos, fecha_nacimiento, email, contraseña, id_favorito }) {
+    try {
+
+        // if (!nombre || !apellidos || !email || !fecha_nacimiento || !contraseña || !id_favorito) {
+        //     console.error("Error: uno o más parámetros están undefined o null.");
+        //     return null;
+        // }
+        //const hashedPassword = await bcrypt.hash(password, 10);
+        const values = [nombre, apellidos, fecha_nacimiento, email, contraseña, id_favorito];
+        const result = await pool.query(queries.createUser, values);
+        return result.data
+
+    } catch (err) {
+        console.error("Error ejecutando createUser:", err);
+        throw err; // 
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const values = [nombre, apellidos, email, password];
-    const result = await pool.query(queries.createUser, values);
-    return result.data
-    
-  } catch (err) {
-    console.error("Error ejecutando createUser:", err);
-    throw err; // 
-  }
 }
 
 // {
@@ -74,7 +74,7 @@ const updateUser = async (id) => {
         client = await pool.connect(); // Espera a abrir conexion
         const data = await client.query(queries.updateUser, [id])
         result = data.rows
-        
+
     } catch (err) {
         console.log(err);
         throw err;
@@ -85,13 +85,13 @@ const updateUser = async (id) => {
 }
 
 // DELETE
-const deleteUser = async (title) => {
+const deleteUser = async (usuarioId) => {
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.deleteUser, [])
+        const data = await client.query(queries.deleteUser, [usuarioId])
         result = data.rows
-        
+
     } catch (err) {
         console.log(err);
         throw err;
