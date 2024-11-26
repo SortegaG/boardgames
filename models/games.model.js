@@ -1,15 +1,15 @@
-const queries = require('../queries/user.queries') // Queries SQL
+const queries = require('../queries/games.queries') // Queries SQL
 const pool = require('../config/db_pgsql')
 //const bcrypt = require('bcryptjs');
 
 // GET
-const getUserByEmail = async (email) => {
+const getGameById = async (id) => {
     console.log();
 
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.getUSerByEmail, [email])
+        const data = await client.query(queries.getGameById, [id])
         result = data.rows
 
     } catch (err) {
@@ -22,11 +22,11 @@ const getUserByEmail = async (email) => {
 }
 
 // GET
-const getAllUsers = async () => {
+const getAllGames = async () => {
     let client, result;
     try {
         client = await pool.connect();
-        const data = await client.query(queries.getAllUsers)
+        const data = await client.query(queries.getAllGames)
         result = data.rows
     } catch (err) {
         console.log(err);
@@ -41,10 +41,10 @@ const getAllUsers = async () => {
 
 
 // CREATE
-async function createUser({ nombre, apellidos, fecha_nacimiento, email, contraseña, id_favorito }) {
+async function createGame ({ nombre, descripcion, categoria, edad_recomendada, jugadores_min, jugadores_max }) {
     try {
-        const values = [nombre, apellidos, fecha_nacimiento, email, contraseña, id_favorito];
-        const result = await pool.query(queries.createUser, values);
+        const values = [nombre, descripcion, categoria, edad_recomendada, jugadores_min, jugadores_max];
+        const result = await pool.query(queries.createGame, values);
         return result.data
 
     } catch (err) {
@@ -62,28 +62,28 @@ async function createUser({ nombre, apellidos, fecha_nacimiento, email, contrase
 // }
 
 //UPDATE
-const updateUser = async (email) => {
+// const updateUser = async (email) => {
+//     let client, result;
+//     try {
+//         client = await pool.connect(); // Espera a abrir conexion
+//         const data = await client.query(queries.updateUser, [email])
+//         result = data.rows
+
+//     } catch (err) {
+//         console.log(err);
+//         throw err;
+//     } finally {
+//         client.release();
+//     }
+//     return result
+// }
+
+// // DELETE
+const deleteGame = async (GameId) => {
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.updateUser, [email])
-        result = data.rows
-
-    } catch (err) {
-        console.log(err);
-        throw err;
-    } finally {
-        client.release();
-    }
-    return result
-}
-
-// DELETE
-const deleteUser = async (usuarioId) => {
-    let client, result;
-    try {
-        client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.deleteUser, [usuarioId])
+        const data = await client.query(queries.deleteGame, [GameId])
         result = data.rows
 
     } catch (err) {
@@ -96,11 +96,11 @@ const deleteUser = async (usuarioId) => {
 }
 
 const users = {
-    getUserByEmail,
-    getAllUsers,
-    createUser,
-    updateUser,
-    deleteUser
+    getGameById,
+    getAllGames,
+    createGame,
+    // updateUser,
+    deleteGame
 }
 
 module.exports = users;
