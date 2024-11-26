@@ -1,6 +1,6 @@
 -- Primero, creamos las tablas sin claves foráneas.
 CREATE TABLE games (
-    id_juego INT PRIMARY KEY,
+    id_juego SERIAL PRIMARY KEY, -- SERIAL para autoincrementar
     nombre VARCHAR(255) NOT NULL,
     descripcion TEXT,
     categoria VARCHAR(255),
@@ -10,29 +10,30 @@ CREATE TABLE games (
 );
 
 CREATE TABLE users (
-    id_usuario INT PRIMARY KEY,
+    id_usuario SERIAL PRIMARY KEY, -- SERIAL para autoincrementar
     nombre VARCHAR(255) NOT NULL,
     apellidos VARCHAR(255) NOT NULL,
     fecha_nacimiento DATE,
     email VARCHAR(255) UNIQUE NOT NULL,
     contraseña VARCHAR(255) NOT NULL,
-    id_favorito INT
+    id_favorito INT -- Este campo puede ser una clave foránea si es necesario
 );
 
 CREATE TABLE favorites (
-    id_favorito INT PRIMARY KEY,
-    id_usuario INT,
-    id_juego INT
+    id_favorito SERIAL PRIMARY KEY, -- SERIAL para autoincrementar
+    id_usuario INT REFERENCES users(id_usuario), -- Clave foránea para relacionar con users
+    id_juego INT REFERENCES games(id_juego) -- Clave foránea para relacionar con games
 );
 
 CREATE TABLE reseñas (
-    id_reseña INT PRIMARY KEY,
-    id_usuario INT,
-    id_juego INT,
+    id_reseña SERIAL PRIMARY KEY, -- SERIAL para autoincrementar
+    id_usuario INT REFERENCES users(id_usuario), -- Clave foránea
+    id_juego INT REFERENCES games(id_juego), -- Clave foránea
     comentario TEXT,
     calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
     fecha DATE
 );
+
 
 -- Luego, agregamos las claves foráneas en las tablas correspondientes.
 ALTER TABLE users
