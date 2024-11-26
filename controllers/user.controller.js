@@ -67,7 +67,7 @@ const updateUser = async (req, res) => {
 //BORRAR
 const deleteUser = async (req, res) => {
     try {
-        const usuarioId = req.params.id
+        const usuarioId = req.params.email
 
         if (!usuarioId) {
             return res.status(400).json({ message: 'Se requiere un ID para eliminar un usuario' });
