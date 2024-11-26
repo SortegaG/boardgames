@@ -34,11 +34,16 @@ app.use(express.json());
 
 // Rutas
 
-const userRoutes = require("./routes/user.routes")
+const userRoutes = require("./routes/user.routes");
+const gamesRoutes = require("./routes/games.routes");
+
 
 // Habilitacion de rutas
 
-app.use('/user',userRoutes);
+app.use('/api/user',userRoutes);
+app.use('/api/games',gamesRoutes);
+
+
 
 
 // app.use("*", manage404);
