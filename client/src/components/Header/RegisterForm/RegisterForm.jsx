@@ -41,7 +41,8 @@ const RegisterForm = ({ onClose }) => {
 
       console.log("Respuesta del servidor:", response.data);
 
-      // Si el POST es exitoso //
+      // Si el POST es exitoso // //
+      
       setSuccess(true);
       console.log("Usuario registrado con éxito");
       onClose(); // Cerrar el modal si todo sale bien
