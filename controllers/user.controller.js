@@ -21,6 +21,26 @@ const getUsers = async (req, res) => {
     }
 };
 
+const getUserByEmail = async (req, res) => {
+    try {
+        const usuarioEmail = req.params.email
+
+        if (!usuarioEmail) {
+            return res.status(400).json({ message: 'Se requiere un ID para eliminar un usuario' });
+        }
+        const result = await userModel.getUserByEmail(usuarioEmail);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: `No se encontró ningún usuario con el email: ${usuarioEmail}` });
+        }
+
+        res.status(200).json({ usuario: result });
+    } catch (error) {
+        console.error('Error al eliminar usuario:', error);
+        res.status(500).json({ message: 'Error al eliminar el usuario' });
+    }
+};
+
 
 const createUser = async (req, res) => {
     const newUser = req.body; 
@@ -94,4 +114,5 @@ module.exports = {
     createUser,
     deleteUser,
     updateUser,
+    getUserByEmail
 }

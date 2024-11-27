@@ -1,7 +1,7 @@
 
 const queries = {
     getUSerByEmail: `
-    SELECT id
+    SELECT *
     FROM users
     WHERE email = $1`,
     getAllUsers: `SELECT * FROM users`,
