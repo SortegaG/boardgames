@@ -14,11 +14,11 @@ const getGames = async (req, res) => {
     }
 };
 
-const getGameById = async (req, res) => {
-    const gameId = req.params.id
+const getGameByName = async (req, res) => {
+    const gameName = req.params.nombre
     try {
             
-        let games = await gamesModel.getGameById(gameId);
+        let games = await gamesModel.getGameById(gameName);
         
         res.json({ juegos: games });
     } catch (err) {
@@ -72,7 +72,7 @@ const createGame = async (req, res) => {
 // //BORRAR
 const deleteGame = async (req, res) => {
     try {
-        const GameId = req.params.id
+        const GameId = req.params.nombre
 
         if (!GameId) {
             return res.status(400).json({ message: 'Se requiere un ID para eliminar un juego' });
@@ -96,7 +96,7 @@ const deleteGame = async (req, res) => {
 
 module.exports = {
     getGames,
-    getGameById,
+    getGameByName,
     createGame,
     deleteGame,
     // updateUser,

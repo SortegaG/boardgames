@@ -3,13 +3,13 @@ const pool = require('../config/db_pgsql')
 //const bcrypt = require('bcryptjs');
 
 // GET
-const getGameById = async (id) => {
-    console.log();
+const getGameById = async (nombre) => {
+    console.log(nombre);
 
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.getGameById, [id])
+        const data = await client.query(queries.getGameById, [nombre])
         result = data.rows
 
     } catch (err) {

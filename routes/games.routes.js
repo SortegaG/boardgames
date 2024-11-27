@@ -3,9 +3,9 @@ const router = require('express').Router();
 const express = require('express');
 
 router.get('/', GamesController.getGames);
-router.get('/:id', GamesController.getGameById);
+router.get('/:nombre', GamesController.getGameByName);
 router.post('/', GamesController.createGame);
-router.delete('/:id', GamesController.deleteGame);
+router.delete('/:nombre', GamesController.deleteGame);
 
 
 // router.put('/:email', GamesController.updateUser); // Sin terminar
