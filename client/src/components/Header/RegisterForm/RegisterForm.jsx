@@ -1,51 +1,85 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "../../../styles/components/_Header.scss";
 
 const RegisterForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    birthDate: "",
+    nombre: "",
+    apellidos: "",
+    fecha_nacimiento: "",
     email: "",
-    password: "",
+    contraseña: "",
   });
+
+  const [error, setError] = useState(null); // Para manejar errores
+  const [success, setSuccess] = useState(false); // Para indicar éxito
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Register Data:", formData);
-    onClose();
-  };
+    setError(null); // Resetear el error antes de enviar
+
+    // Validar que la fecha de nacimiento no esté vacía
+    if (!formData.fecha_nacimiento) {
+      setError("La fecha de nacimiento es obligatoria.");
+      return;
+    }
+
+    // Asegurarse de que la fecha esté en el formato adecuado
+    const formattedDate = new Date(formData.fecha_nacimiento).toISOString().split('T')[0];
+
+    try {
+      // Crear un nuevo objeto de datos con la fecha formateada
+      const response = await axios.post("http://localhost:3000/api/user", {
+        ...formData,
+        fecha_nacimiento: formattedDate
+      });
+
+      console.log("Respuesta del servidor:", response.data);
+
+      // Si el POST es exitoso
+      setSuccess(true);
+      console.log("Usuario registrado con éxito");
+      onClose(); // Cerrar el modal si todo sale bien
+    } catch (err) {
+      console.error("Error en el registro:", err);
+      setError(
+        err.response?.data?.message || "Error al registrar el usuario. Inténtalo de nuevo."
+      );
+    }
+};
 
   return (
     <div className="modal">
       <div className="modal-content">
         <h2>Registrarse</h2>
+        {error && <p className="error-message">{error}</p>} {/* Mostrar errores */}
+        {success && <p className="success-message">¡Registro exitoso!</p>} {/* Mostrar éxito */}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            name="firstName"
+            name="nombre"
             placeholder="Nombre"
-            value={formData.firstName}
+            value={formData.nombre}
             onChange={handleChange}
             required
           />
           <input
             type="text"
-            name="lastName"
-            placeholder="Apellidos"
-            value={formData.lastName}
+            name="apellidos"
+            placeholder="apellidos"
+            value={formData.apellidos}
             onChange={handleChange}
             required
           />
           <input
             type="date"
-            name="birthDate"
-            value={formData.birthDate}
+            name="fecha_nacimiento"
+            value={formData.fecha_nacimiento}
             onChange={handleChange}
             required
           />
@@ -59,9 +93,9 @@ const RegisterForm = ({ onClose }) => {
           />
           <input
             type="password"
-            name="password"
+            name="contraseña"
             placeholder="Contraseña"
-            value={formData.password}
+            value={formData.contraseña}
             onChange={handleChange}
             required
           />
