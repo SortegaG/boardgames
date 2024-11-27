@@ -1,16 +1,18 @@
--- Primero, creamos las tablas sin claves foráneas.
+-- Crear tabla games
 CREATE TABLE games (
-    id_juego SERIAL PRIMARY KEY, -- SERIAL para autoincrementar
-    nombre VARCHAR(255) NOT NULL,
-    descripcion TEXT,
-    categoria VARCHAR(255),
-    edad_recomendada INT,
-    jugadores_min INT,
-    jugadores_max INT
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT NOT NULL,
+    categoria VARCHAR(50) NOT NULL,
+    edad_recomendada INT NOT NULL,
+    jugadores_min INT NOT NULL,
+    jugadores_max INT NOT NULL,
+    imagen_url TEXT NULL
 );
 
+-- Crear tabla users
 CREATE TABLE users (
-    id_usuario SERIAL PRIMARY KEY, -- SERIAL para autoincrementar
+    id_usuario SERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     apellidos VARCHAR(255) NOT NULL,
     fecha_nacimiento DATE,
@@ -19,34 +21,36 @@ CREATE TABLE users (
     id_favorito INT -- Este campo puede ser una clave foránea si es necesario
 );
 
+-- Crear tabla favorites
 CREATE TABLE favorites (
-    id_favorito SERIAL PRIMARY KEY, -- SERIAL para autoincrementar
+    id_favorito SERIAL PRIMARY KEY,
     id_usuario INT REFERENCES users(id_usuario), -- Clave foránea para relacionar con users
-    id_juego INT REFERENCES games(id_juego) -- Clave foránea para relacionar con games
+    id_juego INT REFERENCES games(id) -- Cambiar id_juego por id
 );
 
+-- Crear tabla reseñas
 CREATE TABLE reseñas (
-    id_reseña SERIAL PRIMARY KEY, -- SERIAL para autoincrementar
+    id_reseña SERIAL PRIMARY KEY,
     id_usuario INT REFERENCES users(id_usuario), -- Clave foránea
-    id_juego INT REFERENCES games(id_juego), -- Clave foránea
+    id_juego INT REFERENCES games(id), -- Cambiar id_juego por id
     comentario TEXT,
     calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
     fecha DATE
 );
 
-
--- Luego, agregamos las claves foráneas en las tablas correspondientes.
+-- Clave foránea en la tabla users
 ALTER TABLE users
     ADD CONSTRAINT fk_users_favorito FOREIGN KEY (id_favorito) REFERENCES favorites(id_favorito);
 
+-- Claves foráneas adicionales en la tabla favorites
 ALTER TABLE favorites
     ADD CONSTRAINT fk_favorites_usuario FOREIGN KEY (id_usuario) REFERENCES users(id_usuario),
-    ADD CONSTRAINT fk_favorites_juego FOREIGN KEY (id_juego) REFERENCES games(id_juego);
+    ADD CONSTRAINT fk_favorites_juego FOREIGN KEY (id_juego) REFERENCES games(id);
 
+-- Claves foráneas adicionales en la tabla reseñas
 ALTER TABLE reseñas
     ADD CONSTRAINT fk_reseñas_usuario FOREIGN KEY (id_usuario) REFERENCES users(id_usuario),
-    ADD CONSTRAINT fk_reseñas_juego FOREIGN KEY (id_juego) REFERENCES games(id_juego);
-
+    ADD CONSTRAINT fk_reseñas_juego FOREIGN KEY (id_juego) REFERENCES games(id);
 
 -- Juegos de mesa 
 
