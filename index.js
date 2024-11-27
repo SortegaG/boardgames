@@ -4,6 +4,8 @@ const port = 3000; // Puerto a usar por el servidor
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config();
+const cors = require('cors');
+
 //const path = require('path');
 //const swaggerUi = require('swagger-ui-express');
 //const swaggerDocument = require('./swagger.json');
@@ -27,6 +29,8 @@ app.use(express.static("public")); //Middleware para servir archivos estáticos 
 
 // -- Middleware                    BODY-PARSER
 app.use(express.json()); 
+app.use(cors());
+
 
 // -- JSDOC
 // app.use('/api-jsdoc', express.static(path.join(__dirname, '/jsondocs')));
@@ -38,6 +42,7 @@ const userRoutes = require("./routes/user.routes");
 const gamesRoutes = require("./routes/games.routes");
 const favRoutes = require("./routes/favorites.routes");
 
+app.use(cors());
 
 
 // Habilitacion de rutas
