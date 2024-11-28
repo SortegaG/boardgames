@@ -44,6 +44,7 @@ const Details = () => {
       <p>{gameData.descripcion}</p>
       <p><strong>Categoría:</strong> {gameData.categoria}</p>
       <p><strong>Edad recomendada:</strong> {gameData.edad_recomendada}+</p>
+      <button>Añadir a favoritos</button>
     </div>
   );
 };

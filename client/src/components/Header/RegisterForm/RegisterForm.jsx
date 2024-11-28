@@ -11,8 +11,8 @@ const RegisterForm = ({ onClose }) => {
     contraseña: "",
   });
 
-  const [error, setError] = useState(null); // Para manejar errores
-  const [success, setSuccess] = useState(false); // Para indicar éxito
+  const [error, setError] = useState(null); 
+  const [success, setSuccess] = useState(false); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +21,7 @@ const RegisterForm = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Resetear el error antes de enviar
+    setError(null); 
 
     if (!formData.fecha_nacimiento) {
       setError("La fecha de nacimiento es obligatoria.");
@@ -40,7 +40,7 @@ const RegisterForm = ({ onClose }) => {
 
       setSuccess(true);
       console.log("Usuario registrado con éxito");
-      onClose(); // Cerrar el modal si todo sale bien
+      onClose(); 
 
     } catch (err) {
       console.error("Error en el registro:", err);
