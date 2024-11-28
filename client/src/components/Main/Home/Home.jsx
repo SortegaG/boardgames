@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../styles/components/_Home.scss";
+import Card from "./Card";
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -33,19 +34,7 @@ const Home = () => {
       <h1 className="home-title">Juegos de Mesa</h1>
       <div className="games-grid">
         {games.map((game) => (
-          <div key={game.id_juego} className="game-card">
-            <h3>{game.nombre}</h3>
-            <p>{game.descripcion}</p>
-            <p>
-              <strong>Categoría:</strong> {game.categoria}
-            </p>
-            <p>
-              <strong>Edad recomendada:</strong> {game.edad_recomendada}+
-            </p>
-            <p>
-              <strong>Jugadores:</strong> {game.jugadores_min} - {game.jugadores_max}
-            </p>
-          </div>
+          <Card key={game.id_juego} game={game} />
         ))}
       </div>
     </div>

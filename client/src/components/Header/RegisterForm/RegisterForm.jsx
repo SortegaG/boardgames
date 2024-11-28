@@ -23,17 +23,14 @@ const RegisterForm = ({ onClose }) => {
     e.preventDefault();
     setError(null); // Resetear el error antes de enviar
 
-    // Validar que la fecha de nacimiento no esté vacía
     if (!formData.fecha_nacimiento) {
       setError("La fecha de nacimiento es obligatoria.");
       return;
     }
 
-    // Asegurarse de que la fecha esté en el formato adecuado
     const formattedDate = new Date(formData.fecha_nacimiento).toISOString().split('T')[0];
 
     try {
-      // Crear un nuevo objeto de datos con la fecha formateada
       const response = await axios.post("http://localhost:3000/api/user", {
         ...formData,
         fecha_nacimiento: formattedDate
@@ -41,16 +38,13 @@ const RegisterForm = ({ onClose }) => {
 
       console.log("Respuesta del servidor:", response.data);
 
-      // Si el POST es exitoso // //
-      
       setSuccess(true);
       console.log("Usuario registrado con éxito");
       onClose(); // Cerrar el modal si todo sale bien
+
     } catch (err) {
       console.error("Error en el registro:", err);
-      setError(
-        err.response?.data?.message || "Error al registrar el usuario. Inténtalo de nuevo."
-      );
+      setError(err.response?.data?.message || "Error al registrar el usuario. Inténtalo de nuevo.");
     }
 };
 
