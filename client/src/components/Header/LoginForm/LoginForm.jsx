@@ -1,18 +1,56 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "../../../styles/components/_LoginForm.scss";
 
 const LoginForm = ({ onClose, onLogin }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    console.log(`Campo actualizado: ${name}, Nuevo valor: ${value}`);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login Data:", formData);
-    onLogin();
+    console.log("Datos enviados:", formData);
+
+    try {
+      console.log("Iniciando solicitud a la API...");
+      const response = await axios.post(
+        "http://localhost:3000/user/login",
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        { withCredentials: true }
+      );
+
+      console.log("Respuesta completa del servidor:", response);
+
+      if (response.data.success) {
+        console.log("Inicio de sesión exitoso.");
+        setErrorMessage(""); // Limpia cualquier error previo
+        onLogin(); // Marca al usuario como autenticado
+        onClose(); // Cierra el formulario
+      } else {
+        console.log("Credenciales incorrectas.");
+        setErrorMessage("Correo electrónico o contraseña incorrectos.");
+      }
+    } catch (error) {
+      console.error("Error al realizar la solicitud:", error);
+
+      if (error.response && error.response.data && error.response.data.msg) {
+        setErrorMessage(error.response.data.msg); // Muestra el mensaje del backend
+      } else {
+        setErrorMessage("Ocurrió un error al iniciar sesión. Inténtalo más tarde.");
+      }
+    }
+  };
+
+  const handleClose = () => {
+    setErrorMessage(""); // Limpia el mensaje de error al cerrar
     onClose();
   };
 
@@ -20,6 +58,7 @@ const LoginForm = ({ onClose, onLogin }) => {
     <div className="modal">
       <div className="modal-content">
         <h2>Iniciar Sesión</h2>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -39,7 +78,7 @@ const LoginForm = ({ onClose, onLogin }) => {
           />
           <button type="submit" className="button">Iniciar Sesión</button>
         </form>
-        <button onClick={onClose} className="button close">Cerrar</button>
+        <button onClick={handleClose} className="button close">Cerrar</button>
       </div>
     </div>
   );

@@ -29,7 +29,10 @@ app.use(express.static("public")); //Middleware para servir archivos estáticos 
 
 // -- Middleware                    BODY-PARSER
 app.use(express.json()); 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // Cambia a la URL de tu cliente
+    credentials: true, // Permite enviar cookies
+}));
 
 
 // -- JSDOC
@@ -37,7 +40,7 @@ app.use(cors());
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Rutas
-
+const usersRoutes = require("./routes/users");
 const userRoutes = require("./routes/user.routes");
 const gamesRoutes = require("./routes/games.routes");
 const favRoutes = require("./routes/favorites.routes");
@@ -46,13 +49,10 @@ app.use(cors());
 
 
 // Habilitacion de rutas
-
+app.use('/user',usersRoutes);
 app.use('/api/user',userRoutes);
 app.use('/api/games',gamesRoutes);
 app.use('/api/favorites',favRoutes);
-
-
-
 
 
 // app.use("*", manage404);
