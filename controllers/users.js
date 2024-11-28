@@ -30,7 +30,6 @@ const login = async (req, res) => {
         if (user) {
             const token = createToken({ email: user.email, role: user.role });
 
-            // Configura la cookie con opciones de seguridad
             res.cookie('access_token', token, {
                 httpOnly: true,
                 maxAge: 10 * 60 * 1000, // Expira en 10 minutos
