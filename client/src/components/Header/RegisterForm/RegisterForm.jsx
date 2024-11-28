@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../../../styles/components/_Header.scss";
 
-const RegisterForm = ({ onClose }) => {
+const RegisterForm = ({ onClose }) => { //
   const [formData, setFormData] = useState({
     nombre: "",
     apellidos: "",
