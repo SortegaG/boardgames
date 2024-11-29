@@ -52,6 +52,9 @@ ALTER TABLE reseñas
     ADD CONSTRAINT fk_reseñas_usuario FOREIGN KEY (id_usuario) REFERENCES users(id_usuario),
     ADD CONSTRAINT fk_reseñas_juego FOREIGN KEY (id_juego) REFERENCES games(id);
 
+ALTER TABLE users
+ADD COLUMN role VARCHAR(255) NOT NULL DEFAULT 'user';
+
 -- Juegos de mesa 
 
 -- 2 Jugadores 

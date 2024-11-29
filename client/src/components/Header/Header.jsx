@@ -19,7 +19,7 @@ const Header = () => {
           <Link to="/" className="link">Inicio</Link>
           {!isAuthenticated ? (
             <>
-              <button onClick={() => setShowRegister(true)} className="button">
+              <button onClick={() => setShowRegister(true)} className="button"> 
                 Registrarse
               </button>
               <button onClick={() => setShowLogin(true)} className="button">

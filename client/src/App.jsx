@@ -6,6 +6,8 @@ import Home from './components/Main/Home'
 import Details from "./components/Main/Details";
 // import Register from './components/Header/RegisterForm'
 import Main from './components/Main'
+import Profile from './components/Main/Profile'
+
 
 const App = () => {
   return (
@@ -15,7 +17,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         { <Route path='/api/games/:nombre' element={<Details/>} /> }
-        {/* <Route path="/register" element={<Register />} /> */}
+        {<Route path="/profile" element={<Profile />} />}
       </Routes>
     </Router>
   );
