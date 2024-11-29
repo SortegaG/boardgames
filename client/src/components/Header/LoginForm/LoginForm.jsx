@@ -26,7 +26,6 @@ const LoginForm = ({ onClose, onLogin }) => {
         },
         { withCredentials: true }
       );
-
       console.log("Respuesta completa del servidor:", response);
 
       if (response.data.success) {

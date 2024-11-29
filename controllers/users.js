@@ -17,33 +17,26 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        console.log('Datos recibidos en el backend:', req.body);
-
         const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({ msg: 'Email y contraseña son requeridos' });
-        }
-
         const user = await usersModels.login(email, password);
 
         if (user) {
             const token = createToken({ email: user.email, role: user.role });
 
-            res.cookie('access_token', token, {
-                httpOnly: true,
-                maxAge: 10 * 60 * 1000, // Expira en 10 minutos
-            });
-
-            res.status(200).json({ role: user.role });
+            res.cookie("token", token, {
+                httpOnly: false,
+                sameSite: "Lax", 
+            })
+            .status(200)
+            .json({ success: true, role: user.role });
         } else {
-            res.status(400).json({ msg: 'Credenciales incorrectas' });
+            res.status(400).json({ success: false, msg: "Credenciales incorrectas" });
         }
     } catch (error) {
-        console.error('Error en el controlador login:', error.message);
-        res.status(500).json({ msg: 'Error en el inicio de sesión' });
+        res.status(500).json({ success: false, msg: error.message });
     }
 };
+
 
 
 

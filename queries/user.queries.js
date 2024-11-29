@@ -12,5 +12,8 @@ const queries = {
     WHERE email = $3`,
     deleteUser: `DELETE FROM users
     WHERE email = $1`, 
+    loginUser : `
+    SELECT * FROM users 
+    WHERE email = $1 AND contraseña = $2;`,
 }
 module.exports = queries;
