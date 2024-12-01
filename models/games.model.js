@@ -3,38 +3,30 @@ const pool = require('../config/db_pgsql')
 //const bcrypt = require('bcryptjs');
 
 // GET
-const getGameById = async (nombre) => {
-    console.log(nombre);
-
-    let client, result;
+const getGameById = async (id) => {
     try {
-        client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.getGameById, [nombre])
-        result = data.rows
+        const result = await pool.query(queries.getGameById, [id])
+        
+        if (result.rowCount === 0) {
+            throw new Error("No hay ningun juego con este id: ", id)
+        }
 
+        return result.rows[0]
     } catch (err) {
         console.log(err);
         throw err;
-    } finally {
-        client.release();
     }
-    return result
 }
 
 // GET
 const getAllGames = async () => {
-    let client, result;
     try {
-        client = await pool.connect();
-        const data = await client.query(queries.getAllGames)
-        result = data.rows
+        const result = await pool.query(queries.getAllGames)
+        return result.rows
     } catch (err) {
         console.log(err);
         throw err;
-    } finally {
-        client.release();
     }
-    return result
 }
 
 

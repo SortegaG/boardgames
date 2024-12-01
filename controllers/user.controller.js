@@ -5,15 +5,8 @@ const getUsers = async (req, res) => {
 
     try {
 
-        if (req.query.email) {
-            
-            users = await userModel.getUserByEmail(req.query.email);
-        } else {
-            
-            users = await userModel.getAllUsers();
-        }
+        users = await userModel.getAllUsers();
 
-        
         res.json({ usuarios: users });
     } catch (err) {
         
@@ -21,20 +14,20 @@ const getUsers = async (req, res) => {
     }
 };
 
-const getUserByEmail = async (req, res) => {
+const getUserById = async (req, res) => {
     try {
-        const usuarioEmail = req.params.email
+        const usuarioId = req.params.id
 
-        if (!usuarioEmail) {
+        if (!usuarioId) {
             return res.status(400).json({ message: 'Se requiere un ID para eliminar un usuario' });
         }
-        const result = await userModel.getUserByEmail(usuarioEmail);
+        const result = await userModel.getUserById(usuarioId);
 
         if (result.affectedRows === 0) {
-            return res.status(404).json({ message: `No se encontró ningún usuario con el email: ${usuarioEmail}` });
+            return res.status(404).json({ message: `No se encontró ningún usuario con el id: ${usuarioId}` });
         }
 
-        res.status(200).json({ usuario: result });
+        res.status(200).json({ usuario: result.rows[0] });
     } catch (error) {
         console.error('Error al eliminar usuario:', error);
         res.status(500).json({ message: 'Error al eliminar el usuario' });
@@ -61,39 +54,37 @@ const createUser = async (req, res) => {
 
 
 //ACTUALIZAR
-const updateUser = async (req, res) => {
-    try {
-        const usuarioId = req.params.email
+// const updateUser = async (req, res) => {
+//     try {
+//         const usuarioId = req.params.email
 
-        if (!usuarioId) {
-            return res.status(400).json({ message: 'Se requiere un ID para eliminar un usuario' });
-        }
+//         if (!usuarioId) {
+//             return res.status(400).json({ message: 'Se requiere un ID para eliminar un usuario' });
+//         }
 
-        console.log(`Intentando borrar el usuario con email: ${usuarioId}`);
+//         console.log(`Intentando borrar el usuario con email: ${usuarioId}`);
 
-        const result = await userModel.updateUser(usuarioId);
+//         const result = await userModel.updateUser(usuarioId);
 
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: `No se encontró ningún usuario con el ID: ${usuarioId}` });
-        }
+//         if (result.affectedRows === 0) {
+//             return res.status(404).json({ message: `No se encontró ningún usuario con el ID: ${usuarioId}` });
+//         }
 
-        res.status(200).json({ message: `Se ha borrado el usuario con ID: ${usuarioId}` });
-    } catch (error) {
-        console.error('Error al eliminar usuario:', error);
-        res.status(500).json({ message: 'Error al eliminar el usuario' });
-    }
-};
+//         res.status(200).json({ message: `Se ha borrado el usuario con ID: ${usuarioId}` });
+//     } catch (error) {
+//         console.error('Error al eliminar usuario:', error);
+//         res.status(500).json({ message: 'Error al eliminar el usuario' });
+//     }
+// };
 
 //BORRAR
 const deleteUser = async (req, res) => {
     try {
-        const usuarioId = req.params.email
+        const usuarioId = req.params.id
 
         if (!usuarioId) {
             return res.status(400).json({ message: 'Se requiere un ID para eliminar un usuario' });
         }
-
-        console.log(`Intentando borrar el usuario con ID: ${usuarioId}`);
 
         const result = await userModel.deleteUser(usuarioId);
 
@@ -113,6 +104,6 @@ module.exports = {
     getUsers,
     createUser,
     deleteUser,
-    updateUser,
-    getUserByEmail
+    // updateUser,
+    getUserById
 }

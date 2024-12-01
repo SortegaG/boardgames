@@ -1,15 +1,8 @@
 const favController = require("../controllers/favorites.controller");
 const router = require('express').Router();
-const express = require('express');
 
-router.get('/:userid', favController.getFavoriteByuserId);
-// router.post('/', favController.createGame);
-//router.delete('/', favController.deleteGame);
-
-
-// router.put('/:email', GamesController.updateUser); // Sin terminar
-
-
-
+router.get('/:userId', favController.getFavoriteByUserId);
+router.post('/', favController.createFavorite);
+router.delete('/:id', favController.deleteFavoriteById);
 
 module.exports = router;

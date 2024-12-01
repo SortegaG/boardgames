@@ -3,47 +3,35 @@ const pool = require('../config/db_pgsql')
 //const bcrypt = require('bcryptjs');
 
 // GET
-const getUserByEmail = async (email) => {
-    console.log();
-
-    let client, result;
+const getUserById = async (id) => {
     try {
-        client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.getUSerByEmail, [email])
-        result = data.rows
-
+        const result = await pool.query(queries.getUserById, [id])
+        return result
     } catch (err) {
-        console.log(err);
+        console.error('Error en el modelo getUserById:', err.message);
         throw err;
-    } finally {
-        client.release();
     }
-    return result
 }
 
 // GET
 const getAllUsers = async () => {
-    let client, result;
     try {
-        client = await pool.connect();
-        const data = await client.query(queries.getAllUsers)
-        result = data.rows
-    } catch (err) {
-        console.log(err);
-        throw err;
-    } finally {
-        client.release();
+        const result = await pool.query(queries.getAllUsers)
+
+        return result.rows;
+    } catch (error) {
+        console.error('Error en el modelo getAllUsers:', error.message);
+        throw error;
     }
-    return result
 }
 
 
 
 
 // CREATE
-async function createUser({ nombre, apellidos, fecha_nacimiento, email, contraseña, id }) {
+async function createUser({ nombre, apellidos, fecha_nacimiento, email, contraseña }) {
     try {
-        const values = [nombre, apellidos, fecha_nacimiento, email, contraseña, id];
+        const values = [nombre, apellidos, fecha_nacimiento, email, contraseña];
         const result = await pool.query(queries.createUser, values);
         return result.data
 
@@ -80,23 +68,17 @@ const updateUser = async (email) => {
 
 // DELETE
 const deleteUser = async (usuarioId) => {
-    let client, result;
     try {
-        client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.deleteUser, [usuarioId])
-        result = data.rows
-
+        const result = await client.query(queries.deleteUser, [usuarioId])
+        return result
     } catch (err) {
         console.log(err);
         throw err;
-    } finally {
-        client.release();
     }
-    return result
 }
 
 const users = {
-    getUserByEmail,
+    getUserById,
     getAllUsers,
     createUser,
     updateUser,
