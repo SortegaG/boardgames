@@ -1,103 +1,58 @@
 const favoritesModel = require('../models/favorites.model');  // Importación del modelo Product
 
-// const getGames = async (req, res) => {
-
-//     try {
-            
-//         let games = await gamesModel.getAllGames();
-        
-        
-//         res.json({ juegos: games });
-//     } catch (err) {
-        
-//         res.status(500).json({ error: 'Error al obtener los juegos: ' + err });
-//     }
-// };
-
-const getFavoriteByuserId = async (req, res) => {
-    const favoriteId = req.params.userid
+const getFavoriteByUserId = async (req, res) => {
+    const userId = req.params.userId
     try {
             
-        let games = await favoritesModel.getFavoriteById(favoriteId);
+        let favoritos = await favoritesModel.getFavoriteByUserId(userId);
         
-        res.json({ Favoritos: games });
+        res.status(200).json({ favoritos });
     } catch (err) {
         
-        res.status(500).json({ error: 'Error al obtener el juego: ' + err });
+        res.status(500).json({ error: 'Error al obtener el favorito: ' + err });
     }
 };
 
-//const createGame = async (req, res) => {
-//     const newGame = req.body; 
+const createFavorite = async (req, res) => {
+    const newFavorite = req.body; 
 
-//     try {
+    try {
         
-//         const response = await gamesModel.createGame(newGame);
+        const response = await favoritesModel.createFavorite(newFavorite);
 
+        res.status(201).json({ success: true, newFavorite: response });
+    } catch (error) {
+        console.error("Error al crear el favorito:", error);
         
-//         res.status(201).json({ success: true, newGame: response });
-//     } catch (error) {
-//         console.error("Error al crear el juego:", error);
-
-        
-//         res.status(400).json({ success: false, message: "Juego ya existe" });
-//     }
-// };
+        res.status(400).json({ success: false, message: "favorito ya existe" });
+    }
+};
 
 
-// // //ACTUALIZAR
-// // const updateUser = async (req, res) => {
-// //     try {
-// //         const usuarioId = req.params.email
+const deleteFavoriteById = async (req, res) => {
+    try {
+        const favoriteId = req.params.id
 
-// //         if (!usuarioId) {
-// //             return res.status(400).json({ message: 'Se requiere un ID para eliminar un usuario' });
-// //         }
+        if (!favoriteId) {
+            return res.status(400).json({ message: 'Se requiere un ID para eliminar un favorito' });
+        }
 
-// //         console.log(`Intentando borrar el usuario con email: ${usuarioId}`);
+        const result = await favoritesModel.deleteFavoriteById(favoriteId);
 
-// //         const result = await userModel.updateUser(usuarioId);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: `No se encontró ningún favorito con el ID: ${favoriteId}` });
+        }
 
-// //         if (result.affectedRows === 0) {
-// //             return res.status(404).json({ message: `No se encontró ningún usuario con el ID: ${usuarioId}` });
-// //         }
-
-// //         res.status(200).json({ message: `Se ha borrado el usuario con ID: ${usuarioId}` });
-// //     } catch (error) {
-// //         console.error('Error al eliminar usuario:', error);
-// //         res.status(500).json({ message: 'Error al eliminar el usuario' });
-// //     }
-// // };
-
-// //BORRAR
-// const deleteGame = async (req, res) => {
-//     try {
-//         const GameId = req.params.id
-
-//         if (!GameId) {
-//             return res.status(400).json({ message: 'Se requiere un ID para eliminar un juego' });
-//         }
-
-//         console.log(`Intentando borrar el juego con ID: ${GameId}`);
-
-//         const result = await gamesModel.deleteGame(GameId);
-
-//         if (result.affectedRows === 0) {
-//             return res.status(404).json({ message: `No se encontró ningún juego con el ID: ${GameId}` });
-//         }
-
-//         res.status(200).json({ message: `Se ha borrado el juego con ID: ${GameId}` });
-//     } catch (error) {
-//         console.error('Error al eliminar juego:', error);
-//         res.status(500).json({ message: 'Error al eliminar el juego' });
-//     }
-// };
+        res.status(200).json({ message: `Se ha borrado el favorito con ID: ${favoriteId}` });
+    } catch (error) {
+        console.error('Error al eliminar favorito:', error);
+        res.status(500).json({ message: 'Error al eliminar el favorito' });
+    }
+};
 
 
 module.exports = {
-    // getGames,
-    getFavoriteByuserId,
-    // createGame,
-    // deleteGame,
-    // updateUser,
+    getFavoriteByUserId,
+    createFavorite,
+    deleteFavoriteById,
 }

@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const decodeToken = express.Router();
 
 decodeToken.use(async (req, res, next) => {
-    console.log("Encoded Token", req.token);
     if (req.token) {
         jwt.verify(req.token, SECRET, (err, decoded) => {
             if (err) {
@@ -14,7 +13,6 @@ decodeToken.use(async (req, res, next) => {
                     error: err.message
                 });
             } else {
-                console.log("decoded", decoded);
                 req.token = decoded;
                 next();
             }

@@ -15,12 +15,12 @@ const getGames = async (req, res) => {
 };
 
 const getGameById = async (req, res) => {
-    const gameName = req.params.nombre
+    const gameId = req.params.id
     try {
             
-        let games = await gamesModel.getGameById(gameName);
+        let game = await gamesModel.getGameById(gameId);
         
-        res.json({ juegos: games });
+        res.json({ juego: game });
     } catch (err) {
         
         res.status(500).json({ error: 'Error al obtener el juego: ' + err });

@@ -1,29 +1,30 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/components/_Header.scss";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 import Cookies from 'js-cookie';
 
+
 const Header = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const valor = Cookies.get('token');
+
+  const [isAuthenticated, setIsAuthenticated] = useState(valor);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  // const [decodedToken, setDecodedToken] = useState(null);
-  // const [valorCookie, setValorCookie] = useState('');
-
-  // const valor = Cookies.get('token');
-  // setValorCookie(valor || '');
-  // console.log('cookie:', valorCookie)
-
-  // const decoded = jwtDecode(valor);
-  // const userId = decoded.id
-  // setDecodedToken(decoded)
-  // console.log(userId)
 
   const handleLogin = () => setIsAuthenticated(true);
-  const handleLogout = () => setIsAuthenticated(false);
+  const handleLogout = async () => {
+
+    try {
+      await axios.get("http://localhost:3000/api/auth/logout");
+
+      setIsAuthenticated(false)
+    } catch (err) {
+      console.error("Error en el logout:", err);
+    }
+  };
 
   return (
     <>

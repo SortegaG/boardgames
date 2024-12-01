@@ -1,5 +1,5 @@
 const pool = require('../config/db_pgsql')
-const queries = require('../queries/user.queries') 
+const queries = require('../queries/auth.queries') 
 
 
 const login = async (email, contraseña) => {

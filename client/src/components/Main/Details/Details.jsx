@@ -4,7 +4,7 @@ import axios from "axios";
 // import '../../../styles/components/_Details.scss';
 
 const Details = () => {
-  const { nombre } = useParams(); 
+  const { id } = useParams(); 
   const [gameData, setGameData] = useState(null); 
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
@@ -15,15 +15,10 @@ const Details = () => {
       setError(null); 
 
       try {
-        const response = await axios.get(`http://localhost:3000/api/games/${encodeURIComponent(nombre)}`);
-        const juegos = response.data.juegos;
+        const response = await axios.get(`http://localhost:3000/api/games/${id}`);
+        const juego = response.data.juego;
 
-        if (juegos && juegos.length > 0) {
-          setGameData(juegos[0]); 
-        } else {
-          setGameData(null);
-          setError("No se encontraron datos del juego.");
-        }
+        setGameData(juego); 
       } catch (e) {
         setError("Hubo un error al obtener los datos del juego.");
         console.error(e);
@@ -33,7 +28,7 @@ const Details = () => {
     };
 
     fetchGameData();
-  }, [nombre]);
+  }, [id]);
 
   if (loading) return <p>Cargando datos del juego...</p>;
   if (error) return <p>{error}</p>;
