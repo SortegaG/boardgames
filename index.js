@@ -43,8 +43,6 @@ const userRoutes = require("./routes/user.routes");
 const gamesRoutes = require("./routes/games.routes");
 const favRoutes = require("./routes/favorites.routes");
 
-app.use(cors());
-
 
 // Habilitacion de rutas
 app.use('/api/auth',authRoutes);

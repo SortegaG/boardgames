@@ -36,6 +36,7 @@ const Details = () => {
   return (
     <div className="details-container">
       <h1>{gameData.nombre}</h1>
+      <img src={gameData.imagen_url} alt={gameData.nombre} />
       <p>{gameData.descripcion}</p>
       <p><strong>Categoría:</strong> {gameData.categoria}</p>
       <p><strong>Edad recomendada:</strong> {gameData.edad_recomendada}+</p>
