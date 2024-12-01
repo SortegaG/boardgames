@@ -11,6 +11,7 @@ const Card = ({ game }) => {
   return (
     <div className="game-card">
       <h3>{game.nombre}</h3>
+      {/* <img src={game.imagen_url} alt={game.nombre} /> */}
       <p>{game.descripcion}</p>
       <p>
         <strong>Categoría:</strong> {game.categoria}

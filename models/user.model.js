@@ -41,9 +41,9 @@ const getAllUsers = async () => {
 
 
 // CREATE
-async function createUser({ nombre, apellidos, fecha_nacimiento, email, contraseña, id_favorito }) {
+async function createUser({ nombre, apellidos, fecha_nacimiento, email, contraseña, id }) {
     try {
-        const values = [nombre, apellidos, fecha_nacimiento, email, contraseña, id_favorito];
+        const values = [nombre, apellidos, fecha_nacimiento, email, contraseña, id];
         const result = await pool.query(queries.createUser, values);
         return result.data
 

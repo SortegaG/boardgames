@@ -1,18 +1,10 @@
 
 const queries = {
     getFavoriteById: `
-SELECT 
-    f.id_favorito,
-    u.email AS id_usuario,
-    g.nombre AS id_juego
-FROM 
-    favorites f
-JOIN 
-    users u ON f.id_usuario = u.id_usuario
-JOIN 
-    games g ON f.id_juego = g.id_juego
-WHERE 
-    u.email = $1;`,
+SELECT *
+FROM favorites AS f
+INNER JOIN games as g ON f.id_juego = g.id
+WHERE id_usuario = $1;`,
     getAllGames: `SELECT * FROM games`,
     createGame: `INSERT INTO games (nombre, descripcion, categoria, edad_recomendada, jugadores_min, jugadores_max)
     VALUES ($1, $2, $3, $4, $5, $6);`,

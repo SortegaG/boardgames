@@ -38,7 +38,7 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true, })
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Rutas
-const usersRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const gamesRoutes = require("./routes/games.routes");
 const favRoutes = require("./routes/favorites.routes");
@@ -47,7 +47,7 @@ app.use(cors());
 
 
 // Habilitacion de rutas
-app.use('/user',usersRoutes);
+app.use('/api/auth',authRoutes);
 app.use('/api/user',userRoutes);
 app.use('/api/games',gamesRoutes);
 app.use('/api/favorites',favRoutes);

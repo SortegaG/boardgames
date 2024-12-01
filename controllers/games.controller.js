@@ -14,7 +14,7 @@ const getGames = async (req, res) => {
     }
 };
 
-const getGameByName = async (req, res) => {
+const getGameById = async (req, res) => {
     const gameName = req.params.nombre
     try {
             
@@ -70,7 +70,7 @@ const createGame = async (req, res) => {
 // };
 
 // //BORRAR
-const deleteGame = async (req, res) => {
+const deleteGameById = async (req, res) => {
     try {
         const GameId = req.params.nombre
 
@@ -96,8 +96,8 @@ const deleteGame = async (req, res) => {
 
 module.exports = {
     getGames,
-    getGameByName,
+    getGameById,
     createGame,
-    deleteGame,
+    deleteGameById,
     // updateUser,
 }

@@ -19,7 +19,7 @@ const LoginForm = ({ onClose, onLogin }) => {
     try {
       console.log("Iniciando solicitud a la API...");
       const response = await axios.post(
-        "http://localhost:3000/user/login",
+        "http://localhost:3000/api/auth/login",
         {
           email: formData.email,
           password: formData.password,
@@ -30,9 +30,9 @@ const LoginForm = ({ onClose, onLogin }) => {
 
       if (response.data.success) {
         console.log("Inicio de sesión exitoso.");
-        setErrorMessage(""); // Limpia cualquier error previo
-        onLogin(); // Marca al usuario como autenticado
-        onClose(); // Cierra el formulario
+        setErrorMessage(""); 
+        onLogin(); 
+        onClose(); 
       } else {
         console.log("Credenciales incorrectas.");
         setErrorMessage("Correo electrónico o contraseña incorrectos.");
@@ -41,7 +41,7 @@ const LoginForm = ({ onClose, onLogin }) => {
       console.error("Error al realizar la solicitud:", error);
 
       if (error.response && error.response.data && error.response.data.msg) {
-        setErrorMessage(error.response.data.msg); // Muestra el mensaje del backend
+        setErrorMessage(error.response.data.msg); 
       } else {
         setErrorMessage("Ocurrió un error al iniciar sesión. Inténtalo más tarde.");
       }
