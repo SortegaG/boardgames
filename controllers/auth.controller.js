@@ -1,4 +1,4 @@
-const usersModels = require('../models/users');
+const authModels = require('../models/auth.model');
 const { createToken } = require('../config/jsonWebToken');
 
 
@@ -6,7 +6,7 @@ const signup = async (req, res) => {
     try {
         const { email, password, role } = req.body;
         console.log("****", role);
-        const newUser = await usersModels.signup(email, password, role)
+        const newUser = await authModels.signup(email, password, role)
         res.status(201).json({ msg: "Signed Up" });
     } catch (error) {
         res.status(400).json({ msg: error.message });
@@ -18,10 +18,10 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await usersModels.login(email, password);
+        const user = await authModels.login(email, password);
 
         if (user) {
-            const token = createToken({ email: user.email, role: user.role });
+            const token = createToken({ email: user.email, role: user.role, id: user.id_usuario });
 
             res.cookie("token", token, {
                 httpOnly: false,
@@ -55,7 +55,7 @@ const logout = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await usersModels.getAllUsers();
+        const users = await authModels.getAllUsers();
         console.log(users);
         res.status(200).json(users);
     } catch (error) {

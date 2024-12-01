@@ -1,6 +1,7 @@
 const express = require('express');
+const users = require('../controllers/auth.controller');
+
 const usersRouter = express.Router();
-const users = require('../controllers/users');
 // const getAccessToken = require('../middleware/getAccessToken');
 // const decodeToken = require('../middleware/decodeToken');
 // const adminRoutes = require('../middleware/adminRoutes');

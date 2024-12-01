@@ -14,8 +14,8 @@ const favoritesModel = require('../models/favorites.model');  // Importación de
 //     }
 // };
 
-const getFavoriteById = async (req, res) => {
-    const favoriteId = req.params.email
+const getFavoriteByuserId = async (req, res) => {
+    const favoriteId = req.params.userid
     try {
             
         let games = await favoritesModel.getFavoriteById(favoriteId);
@@ -69,7 +69,7 @@ const getFavoriteById = async (req, res) => {
 // //     }
 // // };
 
-// // //BORRAR
+// //BORRAR
 // const deleteGame = async (req, res) => {
 //     try {
 //         const GameId = req.params.id
@@ -96,7 +96,7 @@ const getFavoriteById = async (req, res) => {
 
 module.exports = {
     // getGames,
-    getFavoriteById,
+    getFavoriteByuserId,
     // createGame,
     // deleteGame,
     // updateUser,

@@ -5,7 +5,7 @@ const queries = {
     FROM users
     WHERE email = $1`,
     getAllUsers: `SELECT * FROM users`,
-    createUser: `INSERT INTO users (nombre, apellidos, fecha_nacimiento, email, contraseña, id_favorito)
+    createUser: `INSERT INTO users (nombre, apellidos, fecha_nacimiento, email, contraseña, id)
     VALUES ($1, $2, $3, $4, $5, $6);`,
     updateUser: `UPDATE users
     SET nombre = $1 , apellidos = $2, email = $3, password = $4

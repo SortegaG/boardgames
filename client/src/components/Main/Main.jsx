@@ -7,7 +7,7 @@ class Main extends Component {
   render() {
     return (
     <>
-      {/* <Home /> */}
+      <Home />
       <Profile />
     </>
   )}
