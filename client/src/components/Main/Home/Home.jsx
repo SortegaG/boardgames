@@ -15,33 +15,43 @@ const Home = () => {
   const categories = ["estrategia", "clásico", "cartas", "abstracto", "cooperativo"];
 
   useEffect(() => {
-
-    const valor = Cookies.get('token');
-    const decoded = jwtDecode(valor);
-    const userId = decoded.id
-
     const fetchGames = async () => {
       try {
+        const valor = Cookies.get('token');
+        let userId = null;
+        let juegosFavoritosId = [];
+
+        if (valor) {
+          try {
+            const decoded = jwtDecode(valor);
+            userId = decoded.id;
+          } catch (decodeError) {
+            console.error("Error al decodificar el token:", decodeError);
+          }
+        }
+
         const gameResponse = await axios.get("http://localhost:3000/api/games/");
-        const favoriteResponse = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+        const juegos = gameResponse.data.juegos;
 
-        const juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego)
+        if (userId) {
+          try {
+            const favoriteResponse = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+            juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego);
 
-        const games = gameResponse.data.juegos.map((juego) => {
-          
-          const es_favorito = juegosFavoritosId.includes(juego.id)
+            // Agregar información de favoritos a los juegos
+            juegos.forEach((juego) => {
+              juego.es_favorito = juegosFavoritosId.includes(juego.id);
+              if (juego.es_favorito) {
+                const favorito = favoriteResponse.data.favoritos.find((favorito) => favorito.id_juego === juego.id);
+                juego.id_favorito = favorito?.id_favorito; // Maneja el caso en que no se encuentre el favorito
+              }
+            });
+          } catch (favoriteError) {
+            console.error("Error al obtener los favoritos:", favoriteError);
+          }
+        }
 
-          const juegoModificado = {...juego, es_favorito}
-            if (es_favorito) {
-              const favorito = favoriteResponse.data.favoritos.find(favorito => favorito.id_juego === juego.id );
-              juegoModificado.id_favorito = favorito.id_favorito
-            }
-
-            return juegoModificado
-          })
-
-
-        setGames(games || []);
+        setGames(juegos || []);
       } catch (err) {
         console.error("Error al obtener los datos:", err);
         setError("Error al obtener los datos de la API");
@@ -52,7 +62,6 @@ const Home = () => {
 
     fetchGames();
   }, []);
-  
 
   if (loading) return <p>Cargando juegos...</p>;
   if (error) return <p>{error}</p>;
@@ -60,36 +69,40 @@ const Home = () => {
   const handleCategoryChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
-        setSelectedCategories([...selectedCategories, value]);
+      setSelectedCategories([...selectedCategories, value]);
     } else {
-        setSelectedCategories(selectedCategories.filter((category) => category !== value));
+      setSelectedCategories(selectedCategories.filter((category) => category !== value));
     }
-};
+  };
 
-const filteredGames = games.filter((game) => {
-  const matchesName = game.nombre.toLowerCase().includes(searchText.toLowerCase());
-  const matchesCategory =
+  const filteredGames = games.filter((game) => {
+    const matchesName = game.nombre.toLowerCase().includes(searchText.toLowerCase());
+    const matchesCategory =
       selectedCategories.length === 0 || selectedCategories.includes(game.categoria.toLowerCase());
-  return matchesName && matchesCategory;
-});
+    return matchesName && matchesCategory;
+  });
 
   return (
     <div className="home-container">
       <h1 className="home-title">Juegos de Mesa</h1>
-      <input type="text" value={searchText} onChange={ (e) => setSearchText(e.target.value)}></input>
+      <input
+        type="text"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+      />
       <div>
-                {categories.map((category) => (
-                    <label key={category}>
-                        <input
-                            type="checkbox"
-                            value={category}
-                            onChange={handleCategoryChange}
-                        />
-                        {category}
-                    </label>
-                ))}
-            </div>     
-        <div className="games-grid">
+        {categories.map((category) => (
+          <label key={category}>
+            <input
+              type="checkbox"
+              value={category}
+              onChange={handleCategoryChange}
+            />
+            {category}
+          </label>
+        ))}
+      </div>
+      <div className="games-grid">
         {filteredGames.map((game) => (
           <Card key={game.id} game={game} />
         ))}
