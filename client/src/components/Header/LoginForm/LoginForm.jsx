@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../../../styles/components/_LoginForm.scss";
 
+
 const LoginForm = ({ onClose, onLogin }) => {
+  const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -19,7 +22,7 @@ const LoginForm = ({ onClose, onLogin }) => {
     try {
       console.log("Iniciando solicitud a la API...");
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        `${BASE_URL}/api/auth/login`,
         {
           email: formData.email,
           password: formData.password,
@@ -49,7 +52,7 @@ const LoginForm = ({ onClose, onLogin }) => {
   };
 
   const handleClose = () => {
-    setErrorMessage(""); // Limpia el mensaje de error al cerrar
+    setErrorMessage(""); 
     onClose();
   };
 

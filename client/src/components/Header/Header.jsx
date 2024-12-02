@@ -8,6 +8,8 @@ import Cookies from 'js-cookie';
 
 
 const Header = () => {
+  const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+
   const valor = Cookies.get('token');
 
   const [isAuthenticated, setIsAuthenticated] = useState(valor);
@@ -18,7 +20,7 @@ const Header = () => {
   const handleLogout = async () => {
 
     try {
-      await axios.get("http://localhost:3000/api/auth/logout");
+      await axios.get(`${BASE_URL}/api/auth/logout`);
 
       setIsAuthenticated(false)
     } catch (err) {

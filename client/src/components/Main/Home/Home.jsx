@@ -8,6 +8,8 @@ import { DebounceInput } from 'react-debounce-input';
 
 
 const Home = () => {
+  const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,12 +34,12 @@ const Home = () => {
           }
         }
 
-        const gameResponse = await axios.get("http://localhost:3000/api/games/");
+        const gameResponse = await axios.get(`${BASE_URL}/api/games/`);
         const juegos = gameResponse.data.juegos;
 
         if (userId) {
           try {
-            const favoriteResponse = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+            const favoriteResponse = await axios.get(`${BASE_URL}/api/favorites/${userId}`);
             juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego);
 
             juegos.forEach((juego) => {

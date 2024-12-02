@@ -3,6 +3,9 @@ import axios from "axios";
 import "../../../styles/components/_Header.scss";
 
 const RegisterForm = ({ onClose }) => {
+
+  const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+
   const [formData, setFormData] = useState({
     nombre: "",
     apellidos: "",
@@ -13,6 +16,7 @@ const RegisterForm = ({ onClose }) => {
 
   const [error, setError] = useState(null); 
   const [success, setSuccess] = useState(false); 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -30,7 +34,7 @@ const RegisterForm = ({ onClose }) => {
     const formattedDate = new Date(formData.fecha_nacimiento).toISOString().split('T')[0];
 
     try {
-      const response = await axios.post("http://localhost:3000/api/user", {
+      const response = await axios.post(`${BASE_URL}/api/user`, {
         ...formData,
         fecha_nacimiento: formattedDate
       });
@@ -39,7 +43,7 @@ const RegisterForm = ({ onClose }) => {
 
       setSuccess(true);
       console.log("Usuario registrado con éxito");
-      onClose(); // Cerrar el modal si todo sale bien
+      onClose(); 
 
     } catch (err) {
       console.error("Error en el registro:", err);
