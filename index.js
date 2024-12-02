@@ -29,8 +29,13 @@ app.use(express.static("public")); //Middleware para servir archivos estáticos 
 
 // -- Middleware                    BODY-PARSER
 app.use(express.json()); 
-app.use(cors({ origin: "http://localhost:5173", credentials: true, })
-);
+const corsOptions = {
+    origin: ["https://tu-frontend.onrender.com"], // Acepta solicitudes del dominio del frontend
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // Si necesitas cookies o autenticación
+};
+
+app.use(cors(corsOptions));
 
 
 // -- JSDOC

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../styles/components/_Home.scss";
 import Card from "./Card";
-import { jwtDecode } from "jwt-decode";
-import Cookies from 'js-cookie';
+import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -14,35 +14,40 @@ const Home = () => {
 
   const categories = ["estrategia", "clásico", "cartas", "abstracto", "cooperativo"];
 
+  // Base URL dinámica según la variable de entorno
+  const baseURL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const valor = Cookies.get('token');
+        const token = Cookies.get("token");
         let userId = null;
         let juegosFavoritosId = [];
 
-        if (valor) {
+        if (token) {
           try {
-            const decoded = jwtDecode(valor);
+            const decoded = jwtDecode(token);
             userId = decoded.id;
           } catch (decodeError) {
             console.error("Error al decodificar el token:", decodeError);
           }
         }
 
-        const gameResponse = await axios.get("http://localhost:3000/api/games/");
+        const gameResponse = await axios.get(`${baseURL}/api/games/`);
         const juegos = gameResponse.data.juegos;
 
         if (userId) {
           try {
-            const favoriteResponse = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+            const favoriteResponse = await axios.get(`${baseURL}/api/favorites/${userId}`);
             juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego);
 
             // Agregar información de favoritos a los juegos
             juegos.forEach((juego) => {
               juego.es_favorito = juegosFavoritosId.includes(juego.id);
               if (juego.es_favorito) {
-                const favorito = favoriteResponse.data.favoritos.find((favorito) => favorito.id_juego === juego.id);
+                const favorito = favoriteResponse.data.favoritos.find(
+                  (favorito) => favorito.id_juego === juego.id
+                );
                 juego.id_favorito = favorito?.id_favorito; // Maneja el caso en que no se encuentre el favorito
               }
             });
@@ -61,7 +66,7 @@ const Home = () => {
     };
 
     fetchGames();
-  }, []);
+  }, [baseURL]);
 
   if (loading) return <p>Cargando juegos...</p>;
   if (error) return <p>{error}</p>;
@@ -89,6 +94,7 @@ const Home = () => {
         type="text"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
+        placeholder="Buscar juegos"
       />
       <div>
         {categories.map((category) => (
