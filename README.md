@@ -52,7 +52,7 @@ Asegúrate de tener instalados:
 
 1. Clona el repositorio:  
    ```bash  
-   git clone https://github.com/tu-usuario/juegos-de-mesa.git  
+   git clone https://github.com/SortegaG/boardgames.git
 
 2. Instala dependencias:
     ```bash

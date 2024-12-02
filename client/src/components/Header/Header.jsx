@@ -30,7 +30,7 @@ const Header = () => {
     <>
       <header className="navbar">
         <div className="nav-items">
-          <Link to="/" className="link">Inicio</Link>
+          <button className="button"><Link to="/" className="link">Home</Link></button>
           {!isAuthenticated ? (
             <>
               <button onClick={() => setShowRegister(true)} className="button"> 
@@ -42,8 +42,8 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link to="/profile" className="link">Perfil de Usuario</Link>
-              <button onClick={handleLogout} className="button">Logout</button>
+              <button className="button"> <Link to="/profile" className="link">Perfil de Usuario</Link></button>
+              <button  onClick={handleLogout} className="button">Logout</button>
             </>
           )}
         </div>

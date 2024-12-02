@@ -4,6 +4,8 @@ import "../../../styles/components/_Home.scss";
 import Card from "./Card";
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
+import { DebounceInput } from 'react-debounce-input';
+
 
 const Home = () => {
   const [games, setGames] = useState([]);
@@ -38,12 +40,11 @@ const Home = () => {
             const favoriteResponse = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
             juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego);
 
-            // Agregar información de favoritos a los juegos
             juegos.forEach((juego) => {
               juego.es_favorito = juegosFavoritosId.includes(juego.id);
               if (juego.es_favorito) {
                 const favorito = favoriteResponse.data.favoritos.find((favorito) => favorito.id_juego === juego.id);
-                juego.id_favorito = favorito?.id_favorito; // Maneja el caso en que no se encuentre el favorito
+                juego.id_favorito = favorito?.id_favorito;
               }
             });
           } catch (favoriteError) {
@@ -83,14 +84,17 @@ const Home = () => {
   });
 
   return (
-    <div className="home-container">
+    <main className="home-container">
       <h1 className="home-title">Juegos de Mesa</h1>
-      <input
-        type="text"
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-      />
-      <div>
+              <DebounceInput
+          minLength={1}
+          debounceTimeout={200}
+          onChange={(e) => setSearchText(e.target.value)}
+          className='input'
+          type="text"
+          value={searchText}
+          placeholder="Busca tu juego" />
+      <div className="checkbox-container">
         {categories.map((category) => (
           <label key={category}>
             <input
@@ -102,12 +106,12 @@ const Home = () => {
           </label>
         ))}
       </div>
-      <div className="games-grid">
+      <section className="games-grid">
         {filteredGames.map((game) => (
           <Card key={game.id} game={game} />
         ))}
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

@@ -43,7 +43,7 @@ const Profile = () => {
   return (
     <>
       {<div className="home-container">
-       <h1 className="home-title">Lista de favoritos</h1>
+       <h1 className="home-title">Tus favoritos</h1>
        <div className="games-grid">
          {games.map((game) => (
           <Card key={game.id} game={game}/>
