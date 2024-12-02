@@ -2,6 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
+import '../../../../styles/components/_Card.scss'
 
 const Card = ({ game }) => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const Card = ({ game }) => {
 
   return (
     <article className="game-card">
+      <div>
       <h3>{game.nombre}</h3>
       <img src={game.imagen_url} alt={game.nombre} /> 
       <p>{game.descripcion}</p>
@@ -62,6 +64,8 @@ const Card = ({ game }) => {
       <p>
         <strong>Jugadores:</strong> {game.jugadores_min} - {game.jugadores_max}
       </p>
+      </div>
+      <div className="btn-container">
       <button className="btn" onClick={handleDetailsClick}>
         Detalles
       </button>
@@ -76,6 +80,7 @@ const Card = ({ game }) => {
           </button>
         )
       )}
+      </div>
     </article>
   );
 };
