@@ -28,9 +28,23 @@ const morgan = require("./middleware/morgan");
 app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // -- Middleware                    BODY-PARSER
-app.use(express.json()); 
-app.use(cors({ origin: "http://localhost:5173", credentials: true, })
-);
+app.use(express.json());
+const allowedOrigins = [
+    'http://localhost:5173', // Tu origen de desarrollo
+    'https://seryioaaaaa.netlify.app', // Tu dominio de producción
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true, // Permite el uso de credenciales
+}));
+
 
 
 // -- JSDOC
@@ -45,10 +59,10 @@ const favRoutes = require("./routes/favorites.routes");
 
 
 // Habilitacion de rutas
-app.use('/api/auth',authRoutes);
-app.use('/api/user',userRoutes);
-app.use('/api/games',gamesRoutes);
-app.use('/api/favorites',favRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/games', gamesRoutes);
+app.use('/api/favorites', favRoutes);
 
 
 // app.use("*", manage404);
