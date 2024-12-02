@@ -1,6 +1,5 @@
 const queries = require('../queries/games.queries') // Queries SQL
 const pool = require('../config/db_pgsql')
-//const bcrypt = require('bcryptjs');
 
 // GET
 const getGameById = async (id) => {
@@ -29,9 +28,6 @@ const getAllGames = async () => {
     }
 }
 
-
-
-
 // CREATE
 async function createGame ({ nombre, descripcion, categoria, edad_recomendada, jugadores_min, jugadores_max }) {
     try {
@@ -44,14 +40,6 @@ async function createGame ({ nombre, descripcion, categoria, edad_recomendada, j
         throw err; // 
     }
 }
-
-// {
-//     "nombre": "Damian",
-//     "apellidos": "Orellana",
-//     "email": "damian@gmail.com",
-//     "password": "123456",
-//     "rol": "user"
-// }
 
 //UPDATE
 // const updateUser = async (email) => {
