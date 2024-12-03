@@ -41,7 +41,7 @@ const Home = () => {
             juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego);
 
             juegos.forEach((juego) => {
-              juego.es_favorito = juegosFavoritosId.includes(juego.id);
+              juego.es_favorito = juegosFavoritosId.includes(juego.id);  
               if (juego.es_favorito) {
                 const favorito = favoriteResponse.data.favoritos.find((favorito) => favorito.id_juego === juego.id);
                 juego.id_favorito = favorito?.id_favorito;

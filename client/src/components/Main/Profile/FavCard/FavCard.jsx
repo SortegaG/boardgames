@@ -3,21 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const Card = ({ game }) => {
 
-// DELETE FAV
-
-  // const handleClick = async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
-  //     console.log("Respuesta de la API:", response.data);
-
-  //     setGames(response.data.Favoritos || []);
-  //   } catch (err) {
-  //     console.error("Error al obtener los datos:", err);
-  //     setError("Error al obtener los datos de la API");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   return (
     <div className="game-card">

@@ -22,7 +22,7 @@ const Profile = () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
 
-        const favoritos = response.data.favoritos.map((favorito) => { return {...favorito, es_favorito: true}})
+        const favoritos = response.data.favoritos.map((favorito) => { return { ...favorito, es_favorito: true } })
 
         setGames(favoritos || []);
       } catch (err) {
@@ -43,13 +43,13 @@ const Profile = () => {
   return (
     <>
       {<div className="home-container">
-       <h1 className="home-title">Tus favoritos</h1>
-       <div className="games-grid">
-         {games.map((game) => (
-          <Card key={game.id} game={game}/>
-        ))}
-      </div>
-    </div> }
+        <h1 className="home-title">Tus favoritos</h1>
+        <div className="games-grid">
+          {games.map((game) => (
+            <Card key={game.id} game={game} />
+          ))}
+        </div>
+      </div>}
     </>
   );
 };
