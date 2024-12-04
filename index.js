@@ -29,20 +29,16 @@ app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // -- Middleware                    BODY-PARSER
 app.use(express.json());
-const allowedOrigins = [
-    'http://localhost:5173', // Tu origen de desarrollo
-    'https://seryioaaaaa.netlify.app', // Tu dominio de producción
-];
+const allowedOrigins = ['http://localhost:5173', 'https://seryioaaaaa.netlify.app'];
 
 app.use(cors({
     origin: function (origin, callback) {
         if (allowedOrigins.includes(origin) || !origin) {
             callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'));
+            callback(new Error('Origen no permitido por CORS'));
         }
-    },
-    credentials: true, // Permite el uso de credenciales
+    }
 }));
 
 
