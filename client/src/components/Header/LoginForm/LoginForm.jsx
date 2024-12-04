@@ -22,7 +22,7 @@ const LoginForm = ({ onClose, onLogin }) => {
     try {
       console.log("Iniciando solicitud a la API...");
       const response = await axios.post(
-        `${BASE_URL}/api/auth/login`,
+        `/proxy/auth/login`,
         {
           email: formData.email,
           password: formData.password,

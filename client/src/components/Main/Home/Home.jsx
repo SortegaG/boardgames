@@ -34,12 +34,12 @@ const Home = () => {
           }
         }
 
-        const gameResponse = await axios.get(`${BASE_URL}/api/games/`);
+        const gameResponse = await axios.get(`/proxy/games/`);
         const juegos = gameResponse.data.juegos;
 
         if (userId) {
           try {
-            const favoriteResponse = await axios.get(`${BASE_URL}/api/favorites/${userId}`);
+            const favoriteResponse = await axios.get(`/proxy/favorites/${userId}`);
             juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego);
 
             juegos.forEach((juego) => {

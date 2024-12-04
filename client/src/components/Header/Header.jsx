@@ -20,7 +20,7 @@ const Header = () => {
   const handleLogout = async () => {
 
     try {
-      await axios.get(`${BASE_URL}/api/auth/logout`);
+      await axios.get(`/proxy/auth/logout`);
 
       setIsAuthenticated(false)
     } catch (err) {

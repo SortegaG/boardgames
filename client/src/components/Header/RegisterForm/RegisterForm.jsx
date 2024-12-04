@@ -34,7 +34,7 @@ const RegisterForm = ({ onClose }) => {
     const formattedDate = new Date(formData.fecha_nacimiento).toISOString().split('T')[0];
 
     try {
-      const response = await axios.post(`${BASE_URL}/api/user`, {
+      const response = await axios.post(`/proxy/user`, {
         ...formData,
         fecha_nacimiento: formattedDate
       });

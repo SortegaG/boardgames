@@ -20,7 +20,7 @@ const Profile = () => {
 
     const fetchGames = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+        const response = await axios.get(`http://localhost:3000/proxy/favorites/${userId}`);
 
         const favoritos = response.data.favoritos.map((favorito) => { return {...favorito, es_favorito: true}})
 

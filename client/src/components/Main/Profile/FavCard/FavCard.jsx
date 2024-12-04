@@ -7,7 +7,7 @@ const Card = ({ game }) => {
 
   // const handleClick = async () => {
   //   try {
-  //     const response = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+  //     const response = await axios.get(`http://localhost:3000/proxy/favorites/${userId}`);
   //     console.log("Respuesta de la API:", response.data);
 
   //     setGames(response.data.Favoritos || []);

@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
+const proxy = require('./proxy');
+
 
 //const path = require('path');
 const swaggerUi = require('swagger-ui-express');
@@ -41,6 +43,7 @@ app.use(cors({
     }
 }));
 
+app.use('/proxy', proxy);
 
 
 // -- JSDOC
