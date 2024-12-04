@@ -18,7 +18,7 @@ app.use(cookieParser());
 
 // Logger, formato de lo que sale por terminal
 app.use(express.json()); // Middleware para parsear el body de las peticiones
-app.use(express.static("public")); //Middleware para servir archivos estáticos de front. CSS, JS, assets.
+app.use(express.static("public")); //Middleware para servir archivos estáticos de front. CSS, JS, assets. //
 
 // MiddlewareS                      MANAGE 404 ERROR
 //const manage404 = require("./middlewares/manage404");
