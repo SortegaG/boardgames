@@ -5,6 +5,8 @@ import Card from "./Card";
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
 import { DebounceInput } from 'react-debounce-input';
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 
 const Home = () => {
@@ -32,12 +34,12 @@ const Home = () => {
           }
         }
 
-        const gameResponse = await axios.get("http://localhost:3000/api/games/");
+        const gameResponse = await axios.get(`${apiUrl}/api/games/`);
         const juegos = gameResponse.data.juegos;
 
         if (userId) {
           try {
-            const favoriteResponse = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+            const favoriteResponse = await axios.get(`${apiUrl}/api/favorites/${userId}`);
             juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego);
 
             juegos.forEach((juego) => {

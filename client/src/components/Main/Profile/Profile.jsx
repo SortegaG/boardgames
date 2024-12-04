@@ -5,6 +5,8 @@ import axios from "axios";
 import Card from "../Home/Card";
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 
 const Profile = () => {
@@ -20,7 +22,7 @@ const Profile = () => {
 
     const fetchGames = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+        const response = await axios.get(`${apiUrl}/api/favorites/${userId}`);
 
         const favoritos = response.data.favoritos.map((favorito) => { return { ...favorito, es_favorito: true } })
 

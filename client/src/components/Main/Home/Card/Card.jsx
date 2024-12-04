@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
 import '../../../../styles/components/_Card.scss'
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 const Card = ({ game }) => {
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ const Card = ({ game }) => {
       return;
     }
     try {
-      await axios.post("http://localhost:3000/api/favorites", { id_usuario: userId, id_juego: game.id });
+      await axios.post(`${apiUrl}/api/favorites`, { id_usuario: userId, id_juego: game.id });
       window.location.reload();
     } catch (err) {
       console.error("Error al añadir a favorito:", err);
@@ -42,7 +44,7 @@ const Card = ({ game }) => {
       return;
     }
     try {
-      await axios.delete(`http://localhost:3000/api/favorites/${id}`);
+      await axios.delete(`${apiUrl}/api/favorites/${id}`);
       window.location.reload();
     } catch (err) {
       console.error("Error al quitar favorito:", err);

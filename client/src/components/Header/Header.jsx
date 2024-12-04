@@ -5,6 +5,8 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import axios from "axios";
 import Cookies from 'js-cookie';
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 
 const Header = () => {
@@ -18,7 +20,7 @@ const Header = () => {
   const handleLogout = async () => {
 
     try {
-      await axios.get("http://localhost:3000/api/auth/logout");
+      await axios.get(`${apiUrl}/api/auth/logout`);
 
       setIsAuthenticated(false)
     } catch (err) {
