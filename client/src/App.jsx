@@ -5,7 +5,8 @@ import './styles/_App.scss'
 import Home from './components/Main/Home'
 import Details from "./components/Main/Details";
 import Profile from './components/Main/Profile'
-const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL+'/';
+const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+console.log(apiUrl)
 
 
 
