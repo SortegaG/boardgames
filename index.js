@@ -29,7 +29,7 @@ app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // -- Middleware                    BODY-PARSER
 app.use(express.json()); 
-app.use(cors({ origin: "http://localhost:5173", credentials: true, })
+app.use(cors({ origin: "https://boardgames2.onrender.com", credentials: true, })
 );
 
 
