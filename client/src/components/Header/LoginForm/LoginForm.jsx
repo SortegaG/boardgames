@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../../../styles/components/_LoginForm.scss";
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 
 const LoginForm = ({ onClose, onLogin }) => {

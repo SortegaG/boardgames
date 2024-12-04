@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "../../../styles/components/_Header.scss";
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 
 const RegisterForm = ({ onClose }) => {

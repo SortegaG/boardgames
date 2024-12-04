@@ -5,7 +5,7 @@ import Card from "./Card";
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
 import { DebounceInput } from 'react-debounce-input';
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 
 

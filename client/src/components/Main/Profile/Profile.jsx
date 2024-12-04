@@ -5,7 +5,7 @@ import axios from "axios";
 import Card from "../Home/Card";
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 
 
