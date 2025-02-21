@@ -26,6 +26,20 @@
 - **Axios o Fetch API**: Consumo de la API desde el frontend (si aplica).  
 - **JSON**: Almacenamiento y formato de datos.  
 
+## 📂 Estructura del proyecto  
+BoardGames/
+| ├── client/
+│ | ├── src/
+│ │ ├── components/ # Componentes reutilizables de React
+│ │ ├── styles/ # Archivos SCSS
+│ └── package.json # Dependencias del frontend
+├── routes/ # Rutas de la API
+├── controllers/ # Lógica para gestionar las solicitudes
+├── models/ # Estructura de datos (si aplica)
+└── index.js # Configuración principal del servidor
+├── README.md
+└── package.json # Dependencias del proyecto completo
+
 
 ## 🚀 Cómo iniciar el proyecto  
 
@@ -38,7 +52,7 @@ Asegúrate de tener instalados:
 
 1. Clona el repositorio:  
    ```bash  
-   git clone https://github.com/SortegaG/boardgames.git
+   git clone https://github.com/tu-usuario/juegos-de-mesa.git  
 
 2. Instala dependencias:
     ```bash
@@ -55,10 +69,6 @@ Crea un archivo .env en la carpeta del backend con las siguientes variables: Com
 4. Abre la aplicación en tu navegador:
     ```bash
     http://localhost:5173
-
-5. Puedes ver la documentación de la API en este endpoint:
-    ```bash
-    http://localhost:300/api-docs
 
 ## 📈 Próximas mejoras  
 

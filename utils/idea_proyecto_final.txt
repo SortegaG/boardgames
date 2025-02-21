@@ -1,0 +1,16 @@
+Aplicacion WEB de juegos de mesa.
+
+Basado en otros ejemplos de paginas web, la idea es diseñar un catálogo de juegos de mesa. En esta página web, podrás visualizar juegos de mesa almacenados en una 
+base de datos SQL. 
+
+En el modo sin registro: Visualización de juegos, comentarios y reseñas
+
+En el modo registrado como user: Agregar a favoritos, postear comentarios en los juegos de mesa (opiniones) y reseñas
+
+En el modo registrado como admin: Agregar juegos a la base de datos, eliminar juegos, comentarios o usuarios.
+
+Primeros pasos:
+
+- Repositorio en Github
+- Base de datos SQL
+- Scrap paginas web / almacenar manualmente la base de datos 

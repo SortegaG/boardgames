@@ -1,0 +1,634 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Boardgames - Juegos de mesa",
+    "version": "1.0",
+    "description": "API para gestionar usuarios y favoritos."
+  },
+  "paths": {
+    "/api/user": {
+      "get": {
+        "summary": "Obtiene todos los usuarios en la BBDD",
+        "description": "Devuelve una lista de todos los usuarios en la base de datos.",
+        "responses": {
+          "200": {
+            "description": "Lista de usuarios",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id_usuario": {
+                        "type": "integer",
+                        "example": 1
+                      },
+                      "nombre": {
+                        "type": "string",
+                        "example": "Juan Pérez"
+                      },
+                      "apellidos": {
+                        "type": "string",
+                        "example": "Garcia Garcia"
+                      },
+                      "fecha_nacimiento": {
+                        "type": "string",
+                        "example": "2024-11-01T23:00:00.000Z"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "juanperez@gmail.com"
+                      },
+                      "contraseña": {
+                        "type": "string",
+                        "example": "juanperez@gmail.com"
+                      },
+                      "id_favorito": {
+                        "type": "string",
+                        "example": "aabbcc123"
+                      },
+                      "role": {
+                        "type": "string",
+                        "example": "user"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{id}": {
+      "get": {
+        "summary": "Obtiene los datos de un usuario pasando por parámetro su id en la URL",
+        "description": "Pasándole un id por parámetro a la ruta, puedes ver los datos del usuario.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID del usuario",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datos de usuario concreto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id_usuario": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "nombre": {
+                      "type": "string",
+                      "example": "Juan Pérez"
+                    },
+                    "apellidos": {
+                      "type": "string",
+                      "example": "Garcia Garcia"
+                    },
+                    "fecha_nacimiento": {
+                      "type": "string",
+                      "example": "2024-11-01T23:00:00.000Z"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "juanperez@gmail.com"
+                    },
+                    "contraseña": {
+                      "type": "string",
+                      "example": "juanperez@gmail.com"
+                    },
+                    "id_favorito": {
+                      "type": "string",
+                      "example": "aabbcc123"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "user"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Crea un nuevo usuario",
+        "description": "Permite crear un nuevo usuario en la base de datos enviando un objeto JSON con los datos del usuario.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "example": "Sergaaaaio"
+                  },
+                  "apellidos": {
+                    "type": "string",
+                    "example": "Orteaga"
+                  },
+                  "fecha_nacimiento": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-01-24T23:00:00.000Z"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "sergio.miaaxtaaaapaaaaaaea@gmail.com"
+                  },
+                  "contraseña": {
+                    "type": "string",
+                    "example": "aabbcca123"
+                  },
+                  "id_favorito": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuario creado exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error en la solicitud, los datos no son válidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Datos no válidos"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/games": {
+      "get": {
+        "summary": "Muestra dos juegos de la base de datos",
+        "description": "Devuelve un objeto que contiene un array con dos juegos de mesa",
+        "responses": {
+          "200": {
+            "description": "Lista de dos juegos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "juegos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nombre": {
+                            "type": "string",
+                            "example": "Ajedrez"
+                          },
+                          "descripcion": {
+                            "type": "string",
+                            "example": "Un juego clásico de estrategia entre dos jugadores."
+                          },
+                          "categoria": {
+                            "type": "string",
+                            "example": "Estrategia"
+                          },
+                          "edad_recomendada": {
+                            "type": "integer",
+                            "example": 6
+                          },
+                          "jugadores_min": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "jugadores_max": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "imagen_url": {
+                            "type": "string",
+                            "example": "https://esemtia.com/wp-content/webp-express/webp-images/uploads/2022/06/ajedrez-aula-768x512.jpg.webp"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontraron juegos"
+          }
+        }
+      }
+    },
+    "/api/games/{id}": {
+      "get": {
+        "summary": "Muestra un juego de la base de datos basado en su ID",
+        "description": "Devuelve información sobre un juego específico basado en su ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID del juego",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Información del juego encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "nombre": {
+                      "type": "string",
+                      "example": "Ajedrez"
+                    },
+                    "descripcion": {
+                      "type": "string",
+                      "example": "Un juego clásico de estrategia entre dos jugadores."
+                    },
+                    "categoria": {
+                      "type": "string",
+                      "example": "Estrategia"
+                    },
+                    "edad_recomendada": {
+                      "type": "integer",
+                      "example": 6
+                    },
+                    "jugadores_min": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "jugadores_max": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "imagen_url": {
+                      "type": "string",
+                      "example": "https://esemtia.com/wp-content/webp-express/webp-images/uploads/2022/06/ajedrez-aula-768x512.jpg.webp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Juego no encontrado"
+          }
+        }
+      }
+    },
+    "/api/favorites/{id}": {
+      "get": {
+        "summary": "Obtiene un juego favorito basado en el ID del usuario",
+        "description": "Devuelve información sobre un juego favorito para un usuario específico según su ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID del usuario cuyos favoritos se están consultando.",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Juego favorito encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "juego": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "nombre": {
+                          "type": "string",
+                          "example": "Ajedrez"
+                        },
+                        "descripcion": {
+                          "type": "string",
+                          "example": "Un juego clásico de estrategia entre dos jugadores."
+                        },
+                        "categoria": {
+                          "type": "string",
+                          "example": "Estrategia"
+                        },
+                        "edad_recomendada": {
+                          "type": "integer",
+                          "example": 6
+                        },
+                        "jugadores_min": {
+                          "type": "integer",
+                          "example": 2
+                        },
+                        "jugadores_max": {
+                          "type": "integer",
+                          "example": 2
+                        },
+                        "imagen_url": {
+                          "type": "string",
+                          "example": "https://esemtia.com/wp-content/webp-express/webp-images/uploads/2022/06/ajedrez-aula-768x512.jpg.webp"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Juego favorito no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Juego favorito no encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Elimina un favorito por ID",
+        "description": "Permite eliminar un favorito específico de la base de datos utilizando su ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID del favorito que se desea eliminar.",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Favorito eliminado con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Se ha borrado el favorito con ID: 1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Favorito no encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "No se encontró el favorito con el ID proporcionado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor al intentar eliminar el favorito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Error del servidor al eliminar el favorito."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/favorites": {
+      "post": {
+        "summary": "Añade un juego a los favoritos de un usuario",
+        "description": "Permite agregar un juego a los favoritos de un usuario proporcionando el `id_usuario` y el `id_juego` en el body de la solicitud.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_usuario": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "id_juego": {
+                    "type": "integer",
+                    "example": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Juego añadido a favoritos con éxito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Juego añadido a favoritos con éxito."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error en la solicitud, datos no válidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Datos no válidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor al intentar almacenar la información",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Error del servidor al guardar el favorito."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Inicia sesión del usuario",
+        "description": "Procesa la autenticación del usuario.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "juanperez@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "aabbcc123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inicio de sesión exitoso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Inicio de sesión exitoso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Credenciales inválidas"
+          }
+        }
+      }
+    }
+  }
+}
