@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../../../styles/components/_LoginForm.scss";
 
+
 const LoginForm = ({ onClose, onLogin }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
@@ -19,7 +20,7 @@ const LoginForm = ({ onClose, onLogin }) => {
     try {
       console.log("Iniciando solicitud a la API...");
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        `${import.meta.env.VITE_REACT_APP_BASE_URL}/api/auth/login`,
         {
           email: formData.email,
           password: formData.password,

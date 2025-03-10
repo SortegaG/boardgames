@@ -29,7 +29,7 @@ const Card = ({ game }) => {
       return;
     }
     try {
-      await axios.post("http://localhost:3000/api/favorites", { id_usuario: userId, id_juego: game.id });
+      await axios.post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/favorites`, { id_usuario: userId, id_juego: game.id });
       window.location.reload();
     } catch (err) {
       console.error("Error al añadir a favorito:", err);
@@ -42,7 +42,7 @@ const Card = ({ game }) => {
       return;
     }
     try {
-      await axios.delete(`http://localhost:3000/api/favorites/${id}`);
+      await axios.delete(`https://boardgames-dv1z.onrender.com//api/favorites/${id}`);
       window.location.reload();
     } catch (err) {
       console.error("Error al quitar favorito:", err);

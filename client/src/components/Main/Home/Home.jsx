@@ -32,12 +32,12 @@ const Home = () => {
           }
         }
 
-        const gameResponse = await axios.get("http://localhost:3000/api/games/");
+        const gameResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/games/`);
         const juegos = gameResponse.data.juegos;
 
         if (userId) {
           try {
-            const favoriteResponse = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+            const favoriteResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/favorites/${userId}`);
             juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego);
 
             juegos.forEach((juego) => {
