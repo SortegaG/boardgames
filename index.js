@@ -24,8 +24,8 @@ app.use(express.static("public")); //Middleware para servir archivos estáticos 
 //const manage404 = require("./middlewares/manage404");
 
 // MiddlewareS                      MORGAN
-const morgan = require("./middleware/morgan");
-app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
+// const morgan = require("./middleware/morgan");
+// app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // -- Middleware                    BODY-PARSER
 app.use(express.json()); 
