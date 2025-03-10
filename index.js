@@ -28,8 +28,12 @@ app.use(express.static("public")); //Middleware para servir archivos estáticos 
 // app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // -- Middleware                    BODY-PARSER
-app.use(express.json()); 
-app.use(cors({ origin: "http://localhost:5173", credentials: true, })
+app.use(express.json());
+app.use(
+    cors({
+        origin: ["http://localhost:5173", "https://boardgamesortegag.netlify.app"],
+        credentials: true,
+    })
 );
 
 
@@ -45,10 +49,10 @@ const favRoutes = require("./routes/favorites.routes");
 
 
 // Habilitacion de rutas
-app.use('/api/auth',authRoutes);
-app.use('/api/user',userRoutes);
-app.use('/api/games',gamesRoutes);
-app.use('/api/favorites',favRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/games', gamesRoutes);
+app.use('/api/favorites', favRoutes);
 
 
 // app.use("*", manage404);
