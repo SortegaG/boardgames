@@ -30,7 +30,7 @@ const RegisterForm = ({ onClose }) => {
     const formattedDate = new Date(formData.fecha_nacimiento).toISOString().split('T')[0];
 
     try {
-      const response = await axios.post("https://boardgames-dv1z.onrender.com//api/user", {
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/user`, {
         ...formData,
         fecha_nacimiento: formattedDate
       });
