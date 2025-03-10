@@ -18,7 +18,7 @@ const Header = () => {
   const handleLogout = async () => {
 
     try {
-      await axios.get("https://boardgames-dv1z.onrender.com//api/auth/logout");
+      await axios.get(`${import.meta.env.VITE_REACT_APP_BASE_URL}/api/auth/logout`);
 
       setIsAuthenticated(false)
     } catch (err) {
