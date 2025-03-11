@@ -1,20 +1,6 @@
 const authModels = require('../models/auth.model');
 const { createToken } = require('../config/jsonWebToken');
 
-
-// const signup = async (req, res) => {
-//     try {
-//         const { email, password, role } = req.body;
-//         console.log("****", role);
-//         const newUser = await authModels.signup(email, password, role)
-//         res.status(201).json({ msg: "Signed Up" });
-//     } catch (error) {
-//         res.status(400).json({ msg: error.message });
-//     }
-// };
-
-
-
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -55,24 +41,12 @@ const logout = async (req, res) => {
 };
 
 
-// const getAllUsers = async (req, res) => {
-//     try {
-//         const users = await authModels.getAllUsers();
-//         console.log(users);
-//         res.status(200).json(users);
-//     } catch (error) {
-//         res.status(400).json({ msg: error.message })
-//     }
-// }
-
 
 
 
 const users = {
-    // signup,
     login,
-    logout,
-    // getAllUsers
+    logout
 };
 
 

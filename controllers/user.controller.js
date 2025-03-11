@@ -1,4 +1,6 @@
-const userModel = require('../models/user.model');  // Importación del modelo Product
+const userModel = require('../models/user.model'); 
+const bcrypt = require("bcrypt");
+
 
 const getUsers = async (req, res) => {
     let users;
@@ -36,22 +38,29 @@ const getUserById = async (req, res) => {
 
 
 const createUser = async (req, res) => {
-    const newUser = req.body; 
+    const newUser = req.body;
 
     try {
-        
+
+        if (!newUser.contraseña) {
+            return res.status(400).json({ success: false, message: "La contraseña es obligatoria." });
+        }
+
+        const saltRounds = 10; 
+        const hashedPassword = await bcrypt.hash(newUser.contraseña, saltRounds);
+
+        newUser.contraseña = hashedPassword;
+
         const response = await userModel.createUser(newUser);
 
-        
         res.status(201).json({ success: true, newUser: response });
+
     } catch (error) {
         console.error("Error al crear el usuario:", error);
 
-        
         res.status(400).json({ success: false, message: "Usuario ya existe" });
     }
 };
-
 
 //ACTUALIZAR
 // const updateUser = async (req, res) => {

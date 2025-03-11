@@ -13,6 +13,7 @@ const RegisterForm = ({ onClose }) => {
 
   const [error, setError] = useState(null); 
   const [success, setSuccess] = useState(false); 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -24,6 +25,18 @@ const RegisterForm = ({ onClose }) => {
 
     if (!formData.fecha_nacimiento) {
       setError("La fecha de nacimiento es obligatoria.");
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("El correo electrónico no es válido.");
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    if (!passwordRegex.test(formData.contraseña)) {
+      setError("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.");
       return;
     }
 
@@ -45,7 +58,7 @@ const RegisterForm = ({ onClose }) => {
       console.error("Error en el registro:", err);
       setError(err.response?.data?.message || "Error al registrar el usuario. Inténtalo de nuevo.");
     }
-};
+  };
 
   return (
     <div className="modal">
@@ -65,7 +78,7 @@ const RegisterForm = ({ onClose }) => {
           <input
             type="text"
             name="apellidos"
-            placeholder="apellidos"
+            placeholder="Apellidos"
             value={formData.apellidos}
             onChange={handleChange}
             required
