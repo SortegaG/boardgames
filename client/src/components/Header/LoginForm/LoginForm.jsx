@@ -15,11 +15,13 @@ const LoginForm = ({ onClose, onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Datos enviados:", formData);
+    const apiUrl = import.meta.env.VITE_API_URL;
+
 
     try {
       console.log("Iniciando solicitud a la API...");
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        `${apiUrl}/api/auth/login`,
         {
           email: formData.email,
           password: formData.password,

@@ -16,9 +16,11 @@ const Header = () => {
 
   const handleLogin = () => setIsAuthenticated(true);
   const handleLogout = async () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
     try {
-      await axios.get("http://localhost:3000/api/auth/logout");
+      await axios.get(`${apiUrl}/api/auth/logout`);
 
       setIsAuthenticated(false)
     } catch (err) {

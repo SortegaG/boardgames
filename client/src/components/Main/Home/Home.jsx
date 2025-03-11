@@ -17,6 +17,7 @@ const Home = () => {
   const categories = ["estrategia", "clásico", "cartas", "abstracto", "cooperativo"];
 
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL;
     const fetchGames = async () => {
       try {
         const valor = Cookies.get('token');
@@ -32,12 +33,12 @@ const Home = () => {
           }
         }
 
-        const gameResponse = await axios.get("http://localhost:3000/api/games/");
+        const gameResponse = await axios.get(`${apiUrl}/api/games/`);
         const juegos = gameResponse.data.juegos;
 
         if (userId) {
           try {
-            const favoriteResponse = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+            const favoriteResponse = await axios.get(`${apiUrl}/api/favorites/${userId}`);
             juegosFavoritosId = favoriteResponse.data.favoritos.map((favorito) => favorito.id_juego);
 
             juegos.forEach((juego) => {

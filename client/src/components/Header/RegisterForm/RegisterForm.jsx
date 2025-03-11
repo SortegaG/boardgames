@@ -41,9 +41,11 @@ const RegisterForm = ({ onClose }) => {
     }
 
     const formattedDate = new Date(formData.fecha_nacimiento).toISOString().split('T')[0];
+    const apiUrl = import.meta.env.VITE_API_URL;
+
 
     try {
-      const response = await axios.post("http://localhost:3000/api/user", {
+      const response = await axios.post(`${apiUrl}/api/user`, {
         ...formData,
         fecha_nacimiento: formattedDate
       });

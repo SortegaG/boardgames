@@ -17,10 +17,12 @@ const Profile = () => {
     const valor = Cookies.get('token');
     const decoded = jwtDecode(valor);
     const userId = decoded.id
+    const apiUrl = import.meta.env.VITE_API_URL;
+
 
     const fetchGames = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
+        const response = await axios.get(`${apiUrl}/api/favorites/${userId}`);
 
         const favoritos = response.data.favoritos.map((favorito) => { return { ...favorito, es_favorito: true } })
 

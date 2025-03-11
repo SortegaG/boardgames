@@ -15,7 +15,8 @@ const Details = () => {
       setError(null); 
 
       try {
-        const response = await axios.get(`http://localhost:3000/api/games/${id}`);
+        const apiUrl = import.meta.env.VITE_API_URL;
+        const response = await axios.get(`${apiUrl}/api/games/${id}`);
         const juego = response.data.juego;
 
         setGameData(juego); 
